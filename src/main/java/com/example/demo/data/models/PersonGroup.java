@@ -1,68 +1,73 @@
 package com.example.demo.data.models;
 
-import java.io.Serializable;
 import javax.persistence.*;
+import java.io.Serializable;
 
 
 /**
  * The persistent class for the person_group database table.
- * 
  */
 @Entity
-@Table(name="person_group")
+@Table(name = "person_group")
+@AssociationOverrides({
+        @AssociationOverride(name = "primaryKey.group", joinColumns = @JoinColumn(name = "group_id", nullable = false)),
+        @AssociationOverride(name = "primaryKey.member", joinColumns = @JoinColumn(name = "member_id", nullable = false))
+})
 public class PersonGroup implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private PersonGroupPK id;
+    @EmbeddedId
+    private PersonGroupPK primaryKey = new PersonGroupPK();
 
-	private int quantity;
+    private int quantity;
 
-	//bi-directional many-to-one association to Person
-	@ManyToOne
-	//@JoinColumn(name="group_id")
-	@MapsId("groupId")
-	private Person person1;
+    //bi-directional many-to-one association to Person
+//	@ManyToOne
+    //@JoinColumn(name="group_id")
+//	@MapsId("groupId")
+    private Person group;
 
-	//bi-directional many-to-one association to Person
-	@ManyToOne
-	//@JoinColumn(name="member_id")
-	@MapsId("memberId")
-	private Person person2;
+    //bi-directional many-to-one association to Person
+    //@ManyToOne
+    //@JoinColumn(name="member_id")
+//	@MapsId("memberId")
+    private Person members;
 
-	public PersonGroup() {
-	}
+    public PersonGroup() {
+    }
 
-	public PersonGroupPK getId() {
-		return this.id;
-	}
+    public PersonGroupPK getPrimaryKey() {
+        return this.primaryKey;
+    }
 
-	public void setId(PersonGroupPK id) {
-		this.id = id;
-	}
+    public void setPrimaryKey(PersonGroupPK primaryKey) {
+        this.primaryKey = primaryKey;
+    }
 
-	public int getQuantity() {
-		return this.quantity;
-	}
+    public int getQuantity() {
+        return this.quantity;
+    }
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
-	public Person getPerson1() {
-		return this.person1;
-	}
+    @Transient
+    public Person getGroup() {
+        return this.primaryKey.getGroup();
+    }
 
-	public void setPerson1(Person person1) {
-		this.person1 = person1;
-	}
+    public void setGroup(Person group) {
+        this.primaryKey.setGroup(group);
+    }
 
-	public Person getPerson2() {
-		return this.person2;
-	}
+    @Transient
+    public Person getMembers() {
+        return this.primaryKey.getMembers();
+    }
 
-	public void setPerson2(Person person2) {
-		this.person2 = person2;
-	}
+    public void setMembers(Person members) {
+        this.primaryKey.setMembers(members);
+    }
 
 }

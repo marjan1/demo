@@ -24,11 +24,11 @@ public class Person implements Serializable {
 	private String name;
 
 	//bi-directional many-to-one association to PersonGroup
-	@OneToMany(mappedBy="person1")
+	@OneToMany(mappedBy="group")
 	private List<PersonGroup> personGroups1;
 
 	//bi-directional many-to-one association to PersonGroup
-	@OneToMany(mappedBy="person2")
+	@OneToMany(mappedBy="members")
 	private List<PersonGroup> personGroups2;
 
 	public Person() {
@@ -76,14 +76,14 @@ public class Person implements Serializable {
 
 	public PersonGroup addPersonGroups1(PersonGroup personGroups1) {
 		getPersonGroups1().add(personGroups1);
-		personGroups1.setPerson1(this);
+		personGroups1.setGroup(this);
 
 		return personGroups1;
 	}
 
 	public PersonGroup removePersonGroups1(PersonGroup personGroups1) {
 		getPersonGroups1().remove(personGroups1);
-		personGroups1.setPerson1(null);
+		personGroups1.setGroup(null);
 
 		return personGroups1;
 	}
@@ -98,14 +98,14 @@ public class Person implements Serializable {
 
 	public PersonGroup addPersonGroups2(PersonGroup personGroups2) {
 		getPersonGroups2().add(personGroups2);
-		personGroups2.setPerson2(this);
+		personGroups2.setMembers(this);
 
 		return personGroups2;
 	}
 
 	public PersonGroup removePersonGroups2(PersonGroup personGroups2) {
 		getPersonGroups2().remove(personGroups2);
-		personGroups2.setPerson2(null);
+		personGroups2.setMembers(null);
 
 		return personGroups2;
 	}

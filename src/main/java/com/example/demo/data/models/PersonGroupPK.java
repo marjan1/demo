@@ -1,57 +1,56 @@
 package com.example.demo.data.models;
 
+import javax.persistence.Embeddable;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * The primary key class for the person_group database table.
- * 
  */
 @Embeddable
 public class PersonGroupPK implements Serializable {
-	//default serial version id, required for serializable classes.
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 876771378160122534L;
+    //default serial version id, required for serializable classes.
 
-	@Column(name="group_id")
-	private int groupId;
+    @ManyToOne
+    private Person group;
 
-	@Column(name="member_id")
-	private int memberId;
+    @ManyToOne
+    private Person members;
 
-	public PersonGroupPK() {
-	}
-	public int getGroupId() {
-		return this.groupId;
-	}
-	public void setGroupId(int groupId) {
-		this.groupId = groupId;
-	}
-	public int getMemberId() {
-		return this.memberId;
-	}
-	public void setMemberId(int memberId) {
-		this.memberId = memberId;
-	}
+    public PersonGroupPK() {
+    }
 
-	public boolean equals(Object other) {
-		if (this == other) {
-			return true;
-		}
-		if (!(other instanceof PersonGroupPK)) {
-			return false;
-		}
-		PersonGroupPK castOther = (PersonGroupPK)other;
-		return 
-			(this.groupId == castOther.groupId)
-			&& (this.memberId == castOther.memberId);
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PersonGroupPK that = (PersonGroupPK) o;
+        return Objects.equals(group, that.group) &&
+                Objects.equals(members, that.members);
+    }
 
-	public int hashCode() {
-		final int prime = 31;
-		int hash = 17;
-		hash = hash * prime + this.groupId;
-		hash = hash * prime + this.memberId;
-		
-		return hash;
-	}
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(group, members);
+    }
+
+    public Person getGroup() {
+
+        return group;
+    }
+
+    public void setGroup(Person group) {
+        this.group = group;
+    }
+
+    public Person getMembers() {
+        return members;
+    }
+
+    public void setMembers(Person members) {
+        this.members = members;
+    }
 }
